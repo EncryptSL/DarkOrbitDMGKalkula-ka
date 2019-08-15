@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+</head>
+<body>
+
+DMG LASERU - <input type="text" id="dmg_laser">
+<p>
+DESING LODI - <input type="text" id="desing_ship">
+<p>
+POČET LASERU V LODI <input type="text" id="laser_pocet">
+<p>
+POČET LETOUNŮ - <input type="text" id="letouny">
+SLOTY V LETOUNU 1/2 - <input type="text" id="slots">
+HAVOCK - <input type="text" id="havock">
+<p>
+ZDROJE KAMENY - <input type="text" id="zdroje">
+<p>
+<button id="vypocet">Vypočítej</button>
+<p>
+Kompletní DMG s vylepšením a Desingy <output type="text" id="vse"></output>
+<hr>
+Celkem DMG bez Desingu a Havocku na Sepromu <output type="text" id="se_sepromem"></output>
+<hr>
+Celkem DMG bez Desingu a Havocku na Promeriu <output type="text" id="s_promeriem"></output>
+<hr>
+Celkem DMG s Havockem <output type="text" id="s_havockem"></output>
+<hr>
+Celkem DMG s Desingem <output type="text" id="s_desingem"></output>
+<hr>
+Celkové DMG s Lodním Desingem a Havocky bez Zdroje <output type="text" id="full_bez_zdroje"></output>
+<hr>
+Základní DMG bez desingu a vylepšení <output type="text" id="bez_vylepseni"></output>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script>
+  $(document).ready(function(){
+    $("#vypocet").click(function(){
+    	    var dmg_laser =+ $("#dmg_laser").val();
+          var laser_pocet =+ $("#laser_pocet").val();
+          var letouny =+ $("#letouny").val();
+          var slots=+$("#slots").val();
+
+            var vypocet_1 =+ parseFloat(letouny*slots);
+            var vypocet_2 =+ parseFloat(vypocet_1 + laser_pocet);
+            var vypocet_3 =+ parseFloat(vypocet_2 * dmg_laser);
+
+            if($("#desing_ship").val() == "Enforcer") {
+              var procentage =+ parseFloat(vypocet_3 * 5 / 100);
+              var desing_ship =+ parseFloat(procentage + vypocet_3);
+              $("#s_desingem").text(desing_ship);
+            }
+
+            if($("#havock").val() == "Ano") {
+              var procentage_havock =+ parseFloat(vypocet_3 * 10 / 100);
+              var havock_dmg =+ parseFloat(procentage_havock + vypocet_3);
+              $("#s_havockem").text(havock_dmg);
+            }
+
+            if($("#zdroje").val() == "Promerium") {
+              var procentage_promerium =+ parseFloat(vypocet_3 * 30 / 100);
+              var promerium =+ parseFloat(procentage_promerium + vypocet_3);
+              $("#s_promeriem").text(promerium);
+              var vse =+ parseFloat(vypocet_3 + procentage_promerium + procentage_havock + procentage)
+              $("#vse").text(vse);
+            } else if($("#zdroje").val() == "Seprom") {
+              var procentage_seprom =+ parseFloat(vypocet_3 * 60 / 100);
+              var seprom =+ parseFloat(procentage_seprom + vypocet_3);
+              $("#se_sepromem").text(seprom);
+              var vse =+ parseFloat(vypocet_3 + procentage_seprom)
+              $("#vse").text(vse);
+            }
+
+          var full_vypocet_1 =+ parseFloat(vypocet_3 + procentage + procentage_havock);
+          $("#full_bez_zdroje").text(full_vypocet_1);
+          $("#bez_vylepseni").text(vypocet_3);
+    });
+});
+</script>
+</html>
