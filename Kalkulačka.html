@@ -14,8 +14,14 @@ DESING LODI - <input type="text" id="desing_ship">
 POČET LASERU V LODI <input type="text" id="laser_pocet">
 <p>
 POČET LETOUNŮ - <input type="text" id="letouny">
+<hr>
+POČET LASERU LF3 V LETOUNU - <input type="text" id="laser_v_letounu_lf3">
+POČET LASERU LF4 V LETOUNU - <input type="text" id="laser_v_letounu_lf4">
+<hr>
 SLOTY V LETOUNU 1/2 - <input type="text" id="slots">
 HAVOCK - <input type="text" id="havock">
+SPARŤAN - <input type="text" id="spartan"> 
+<hr>
 <p>
 ZDROJE KAMENY - <input type="text" id="zdroje">
 <p>
@@ -43,41 +49,46 @@ Základní DMG bez desingu a vylepšení <output type="text" id="bez_vylepseni">
     	    var dmg_laser =+ $("#dmg_laser").val();
           var laser_pocet =+ $("#laser_pocet").val();
           var letouny =+ $("#letouny").val();
+          var pocet_lf3_v_letounech =+ $("#laser_v_letounu_lf3").val();
+          var pocet_lf4_v_letounech =+ $("#laser_v_letounu_lf4").val();
           var slots=+$("#slots").val();
 
-            var vypocet_1 =+ parseFloat(letouny*slots);
-            var vypocet_2 =+ parseFloat(vypocet_1 + laser_pocet);
-            var vypocet_3 =+ parseFloat(vypocet_2 * dmg_laser);
+            var lf_4 =+ parseFloat(pocet_lf4_v_letounech * 220)
+            var lf_3 =+ parseFloat(pocet_lf3_v_letounech * 150)
+            var lod =+ parseFloat(laser_pocet * dmg_laser)
+
+            var vypocet_1 =+ parseFloat(letouny*slots + lf_4 + lf_3);
+            var vypocet_2 =+ parseFloat(vypocet_1 + lod);
 
             if($("#desing_ship").val() == "Enforcer") {
-              var procentage =+ parseFloat(vypocet_3 * 5 / 100);
-              var desing_ship =+ parseFloat(procentage + vypocet_3);
+              var procentage =+ parseFloat(vypocet_2 * 5 / 100);
+              var desing_ship =+ parseFloat(procentage + vypocet_2);
               $("#s_desingem").text(desing_ship);
             }
 
             if($("#havock").val() == "Ano") {
-              var procentage_havock =+ parseFloat(vypocet_3 * 10 / 100);
-              var havock_dmg =+ parseFloat(procentage_havock + vypocet_3);
+              var procentage_havock =+ parseFloat(vypocet_2 * 10 / 100);
+              var havock_dmg =+ parseFloat(procentage_havock + vypocet_2);
               $("#s_havockem").text(havock_dmg);
             }
 
             if($("#zdroje").val() == "Promerium") {
-              var procentage_promerium =+ parseFloat(vypocet_3 * 30 / 100);
-              var promerium =+ parseFloat(procentage_promerium + vypocet_3);
+              var procentage_promerium =+ parseFloat(vypocet_2 * 30 / 100);
+              var promerium =+ parseFloat(procentage_promerium + vypocet_2);
               $("#s_promeriem").text(promerium);
-              var vse =+ parseFloat(vypocet_3 + procentage_promerium + procentage_havock + procentage);
+              var vse =+ parseFloat(vypocet_2 + procentage_promerium + procentage_havock + procentage);
               $("#vse").text(vse);
             } else if($("#zdroje").val() == "Seprom") {
-              var procentage_seprom =+ parseFloat(vypocet_3 * 60 / 100);
-              var seprom =+ parseFloat(procentage_seprom + vypocet_3);
+              var procentage_seprom =+ parseFloat(vypocet_2 * 60 / 100);
+              var seprom =+ parseFloat(procentage_seprom + vypocet_2);
               $("#se_sepromem").text(seprom);
-              var vse =+ parseFloat(vypocet_3 + procentage_seprom + procentage_havock + procentage);
+              var vse =+ parseFloat(vypocet_2 + procentage_seprom + procentage_havock + procentage);
               $("#vse").text(vse);
             }
 
-          var full_vypocet_1 =+ parseFloat(vypocet_3 + procentage + procentage_havock);
+          var full_vypocet_1 =+ parseFloat(vypocet_2 + procentage + procentage_havock);
           $("#full_bez_zdroje").text(full_vypocet_1);
-          $("#bez_vylepseni").text(vypocet_3);
+          $("#bez_vylepseni").text(vypocet_2);
     });
 });
 </script>
