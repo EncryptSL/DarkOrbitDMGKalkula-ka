@@ -9,11 +9,10 @@ tyto vymoženosti přidám. Taktéž nejsou navrhnuté Letouny ani jejich Upgrad
 
 
 # Todo - List
-Plán Vylepšení
-+ Přidat Formace
+Plán Vylepšení Verze 1.4
 + Přidat Sparťan Desing
 + Přidat Profil Pilota Kvantovou Optiku 1 + Kvantovou Optiku 2
 + Přidat Boostery
-+ Přidat Desing a Drobné popisky a obrázky případně i DMG laseru.
-+ Přidat jednotlivé Letouny a jejich Osazení Lasery.
-
++ Přidat Drobné popisky a obrázky
++ Přidat přepočet na RSB Munici
++ Přidat Desing kalkulačky
