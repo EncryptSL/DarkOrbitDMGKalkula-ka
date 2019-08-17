@@ -13,6 +13,8 @@ DESING LODI - <input type="text" id="desing_ship">
 <p>
 POČET LASERU V LODI <input type="text" id="laser_pocet">
 <p>
+TYP FORMACE <input type="text" id="formace">
+<p>
 POČET LETOUNŮ - <input type="text" id="letouny">
 <hr>
 POČET LASERU LF3 V LETOUNU - <input type="text" id="laser_v_letounu_lf3">
@@ -27,7 +29,9 @@ ZDROJE KAMENY - <input type="text" id="zdroje">
 <p>
 <button id="vypocet">Vypočítej</button>
 <p>
-Kompletní DMG s vylepšením a Desingy <output type="text" id="vse"></output>
+Výsledný přepočet na UCB - 100 Munici: <output type="text" id="ucb_prepocet"></output>
+<hr>
+Kompletní DMG s vylepšením a Desingy + Formaci <output type="text" id="vse"></output>
 <hr>
 Celkem DMG bez Desingu a Havocku na Sepromu <output type="text" id="se_sepromem"></output>
 <hr>
@@ -39,7 +43,9 @@ Celkem DMG s Desingem <output type="text" id="s_desingem"></output>
 <hr>
 Celkové DMG s Lodním Desingem a Havocky bez Zdroje <output type="text" id="full_bez_zdroje"></output>
 <hr>
-Základní DMG bez desingu a vylepšení <output type="text" id="bez_vylepseni"></output>
+Celkové DMG s Lodní Formací bez zdroje apod <output type="text" id="s_formaci"></output>
+<hr>
+Základní DMG bez desingu a vylepšení a formace <output type="text" id="bez_vylepseni"></output>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
@@ -84,6 +90,32 @@ Základní DMG bez desingu a vylepšení <output type="text" id="bez_vylepseni">
               $("#se_sepromem").text(seprom);
               var vse =+ parseFloat(vypocet_2 + procentage_seprom + procentage_havock + procentage);
               $("#vse").text(vse);
+            }
+
+            if($("#formace").val() == "Srdce") {
+              var formace_srdce_minus_procentage_dmg =+ parseFloat(vypocet_2 * 5 / 100);
+              var vysledne_srdce = vypocti_dmg_na_formaci_srdce =+ parseFloat(vypocet_2 - formace_srdce_minus_procentage_dmg);
+              $("#s_formaci").text(vysledne_srdce);
+              var prepocitej_na_vse = parseFloat(vse - formace_srdce_minus_procentage_dmg);
+              $("#vse").text(prepocitej_na_vse);
+              var prepocitej_na_ucb = parseFloat(prepocitej_na_vse * 4);
+              $("#ucb_prepocet").text(prepocitej_na_ucb);
+            } else if($("#formace").val() == "Vrtacka") {
+              var formace_vrtacka_procentage_dmg =+ parseFloat(vypocet_2 * 20 / 100);
+              var vysledne_vrtacka = vypocti_dmg_na_formaci_vrtacka =+ parseFloat(vypocet_2 + formace_vrtacka_procentage_dmg);
+              $("#s_formaci").text(vysledne_vrtacka);
+              var prepocitej_na_vse = parseFloat(vse + formace_vrtacka_procentage_dmg);
+              $("#vse").text(prepocitej_na_vse);
+              var prepocitej_na_ucb = parseFloat(prepocitej_na_vse * 4);
+              $("#ucb_prepocet").text(prepocitej_na_ucb);
+            } else if($("#formace").val() == "Kruh") {
+              var formace_kruh_minus_procentage_dmg =+ parseFloat(vypocet_2 * 25 / 100);
+              var vysledne_kruh = vypocti_dmg_na_formaci_kruh =+ parseFloat(vypocet_2 - formace_kruh_minus_procentage_dmg);
+              $("#s_formaci").text(vysledne_kruh);
+              var prepocitej_na_vse = parseFloat(vse - formace_kruh_minus_procentage_dmg);
+              $("#vse").text(prepocitej_na_vse);
+              var prepocitej_na_ucb = parseFloat(prepocitej_na_vse * 4);
+              $("#ucb_prepocet").text(prepocitej_na_ucb);
             }
 
           var full_vypocet_1 =+ parseFloat(vypocet_2 + procentage + procentage_havock);
