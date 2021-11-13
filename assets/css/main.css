@@ -1,0 +1,13 @@
+.full-result {
+    color: #f00;
+    font-weight: bold;
+}
+
+.result-without-resources {
+    color: rgb(255, 0, 221);
+    font-weight: bold;
+}
+.result-standard {
+    color: rgb(0, 255, 98);
+    font-weight: bold;
+}

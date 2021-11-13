@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="author" content="EncryptSL (ETERNITY_ROOT#PATRIK_KOLAŘÍK)">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Darkorbit Kalkulačka</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+  <section class="calc_fluid">
+    <div>
+      <label for="laser_typ"><b>Typ laseru</b></label> 
+      <select id="laser_typ">
+        <option value="LF_3">LF-3</option>
+        <option value="LF_4">LF-4</option>
+        <option value="PROMETHEUS">PROMETHEUS</option>
+      </select>
+    </div>
+  
+    <div>
+      <label for="lasers_ship"><b>Počet laserů v lodi:</b></label> 
+      <input type="number" id="lasers_ship" value="1">
+    </div>
+    
+    <div>
+      <label for="lasers_drones"><b>Počet laserů v Iris:</b></label> 
+      <input type="number" id="lasers_drones" min="1" max="20" value="1">
+    </div>
+  
+    <div>
+      <label for="ship_designs"><b>Design lodě:</b></label> 
+      <select id="ship_designs">
+        <option value="NOTHING">Nic</option>
+        <option value="ENFORCER">Enforcer</option>
+        <option value="VANQUISHER">Vanquisher</option>
+        <option value="PEACEMAKER">Peacemaker</option>
+        <option value="SOVEREIGN">Sovereign</option>
+        <option value="SURGEON">Surgeon</option>
+        <option value="REFEREE">Referee</option>
+        <option value="GOLIATH_CHAMPION">Goliath Champion</option>
+        <option value="GOLIATH_X">Goliath-X</option>
+        <option value="DIMINISHER">Diminisher</option>
+        <option value="VENOM">Venom</option>
+        <option value="CYBORG">Cyborg</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="lasers_drones_designs"><b>Design v letounech:</b></label> 
+      <select id="lasers_drones_designs">
+        <option value="NOTHING">Nic</option>
+        <option value="HERCULES">Hercules</option>
+        <option value="HAVOC">Havoc</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="resource"><b>Zdroje v lodi:</b></label>
+      <select id="resource">
+        <option value="NOTHING">Nic</option>
+        <option value="PROMERIUM">Promerium</option>
+        <option value="SEPROM">Seprom</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="upgrades"><b>Upgrady všeho na 20 nebo 16</b></label> 
+      <select id="upgrades">
+        <option value="NO">Ne</option>
+        <option value="YES">Ano</option>
+      </select>
+    </div>
+
+    <button id="calc">Vypočítej</button>
+  </section>
+
+  <section id="calc_space">
+    <div><b><a id="standard_result" class="result-standard"></a></b></div>
+    <div><b><a id="without_resources" class="result-without-resources"></a></b></div>
+    <div><b><a id="full_result" class="full-result"></a></b></div>
+  </section>
+
+  <script src="assets/js/core.js"></script>
+</body>
+</html>
