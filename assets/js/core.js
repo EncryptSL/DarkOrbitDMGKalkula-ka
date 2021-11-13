@@ -7,9 +7,10 @@ document.getElementById("calc").onclick = function () {
     var lasers_drones_designs = document.getElementById("lasers_drones_designs").value;
     var resource = document.getElementById("resource").value;
     var upgrades = document.getElementById("upgrades").value;
+    var dronesFormations = document.getElementById("formations").value;
 
     var dmg =+ calculation_dmg(laser_typ, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource)
-    var dmg_without_resources =+ calculation_dmg(laser_typ, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, "WITHOUT_RESOURCES")
+    var dmg_without_resources =+ calculation_dmg(laser_typ, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, "WITHOUT_RESOURCES")
     var dmg_standard =+ calculation_dmg(laser_typ, lasers_ship, ship_designs, lasers_drones, lasers_drones_designs, resource, "STANDARD")
 
 
@@ -23,13 +24,13 @@ document.getElementById("calc").onclick = function () {
  * kalkulačka počítá s tím že zvolený laser bude jak v letounu tak v lodi.
  * @return number
  */
-function select_lasers_dmg(laser_typ) {
+function select_lasers_dmg(laserTyp) {
     const lasers = [
         {name: "LF_3", dmg: 150},
         {name: "LF_4", dmg: 200},
         {name: "PROMETHEUS", dmg: 210 + 200}
     ]
-    return lasers.filter(subject => subject.name === laser_typ)
+    return lasers.filter(subject => subject.name === laserTyp)
         .map((e) => {
             return e.dmg;
     })
@@ -39,7 +40,7 @@ function select_lasers_dmg(laser_typ) {
  * @description Tato metoda vrací procenta dmg podle zvoleného goliáš desingu
  * @return number
  */
-function select_ship_design(ship_designs) {
+function select_shipDesign(shipDesigns) {
     if (ship_designs === undefined)
         return 0
     if (ship_designs === "NOTHING")
@@ -59,7 +60,7 @@ function select_ship_design(ship_designs) {
         { name: "CYBORG", dmg: 10 }
     ]
 
-    return data.filter(subject => subject.name === ship_designs)
+    return data.filter(subject => subject.name === shipDesigns)
         .map((e) => {
             return e.dmg;
     })
@@ -69,20 +70,24 @@ function select_ship_design(ship_designs) {
  * @description Tato metoda vrací procenta dmg z letounových desingů
  * @return number
  */
-function select_drones_designs(lasers_drones_designs) {
-    if (lasers_drones_designs === "NOTHING")
-        return 0
-    else if (lasers_drones_designs === "HERCULES")
-        return 0
-    else if (lasers_drones_designs === "HAVOC")
-        return 10
+function select_dronesDesign(lasers_drones_designs) {
+    const data = [
+        {name: "NOTHING", dmg: 0}, 
+        {name: "HERCULES", dmg: 0}, 
+        {name: "HAVOC", dmg: 10}
+    ]
+
+    return data.filter(subject => subject.name === lasers_drones_designs)
+    .map((e) => {
+        return e.dmg;
+    })
 }
 
 /**
  * @description Tato metoda vrací procenta dmg z vesmírných zdrojů 
  * @return number
  */
-function select_resources(resource) {
+function select_Resources(resource) {
     if (resource === "NOTHING")
         return 0
     
@@ -100,11 +105,28 @@ function select_resources(resource) {
  * @description Tato metoda počítá vylepšení laserů.
  * @return number
  */
-function calculation_of_upgrades(laser_typ, upgrades) {
+function calculation_of_upgrades(laserTyp, upgrades) {
     if (upgrades === "NO")
         return 0
     else if (upgrades === "YES")
         return 0
+}
+
+/**
+ * @description Tato metoda bere dmg z formace.
+ * @return number
+ */
+ function select_droneFormation(droneFormation) {
+    var formations = [
+        {name: "HEART", dmg: 5}, 
+        {name: "RING", dmg: 25},
+        {name: "DRILL", dmg: 20}
+    ]
+
+    return formations.filter(subject => subject.name === droneFormation)
+        .map((e) => {
+            return e.dmg
+    })
 }
 
 /**
@@ -119,20 +141,22 @@ function percentage(num, per) {
  * @description Tato metoda vypočítá všechny podmínky a věci které jsou potřeba.
  * @return number
  */
-function calculation_dmg(laser_typ, lasers_ship, ship_designs, lasers_drones, lasers_drones_designs, resource, type) {
+function calculation_dmg(laserTyp, lasersShip, shipDesigns, lasers_drones, lasers_drones_designs, resource,type) {
     if (lasers_drones > 20)
         return 20
 
-    var dmg_from_ship = + select_lasers_dmg(laser_typ) * lasers_ship + percentage(select_lasers_dmg(laser_typ) * lasers_ship, select_ship_design(ship_designs))
-    var dmg_from_drones = + select_lasers_dmg(laser_typ) * lasers_drones + percentage(select_lasers_dmg(laser_typ) * lasers_drones, select_drones_designs(lasers_drones_designs))
 
-    var total = dmg_from_ship + dmg_from_drones + percentage(dmg_from_ship + dmg_from_drones, select_resources(resource))
+    var dmg_from_ship = + select_lasers_dmg(laserTyp) * lasersShip + percentage(select_lasers_dmg(laserTyp) * lasersShip, select_shipDesign(shipDesigns))
+    var dmg_from_drones = + select_lasers_dmg(laserTyp) * lasers_drones + percentage(select_lasers_dmg(laserTyp) * lasers_drones, select_dronesDesign(lasers_drones_designs))
+    var dmg_from_resources =+ percentage(dmg_from_ship + dmg_from_drones, select_Resources(resource))
+    var dmg_total = dmg_from_ship + dmg_from_drones + dmg_from_resources
+    var final_dmg = dmg_total
 
     if (type === "STANDARD") {
-        total = select_lasers_dmg(laser_typ) * lasers_ship + select_lasers_dmg(laser_typ) * lasers_drones
+        final_dmg = select_lasers_dmg(laserTyp) * lasersShip + select_lasers_dmg(laserTyp) * lasers_drones
     } else if (type === "WITHOUT_RESOURCES") {
-        total = dmg_from_ship + dmg_from_drones
+        final_dmg = dmg_from_ship + dmg_from_drones
     }
 
-    return total
+    return final_dmg
 }
