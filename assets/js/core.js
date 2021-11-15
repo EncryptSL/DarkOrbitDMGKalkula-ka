@@ -1,3 +1,6 @@
+document.getElementById("reset").onclick = function () {
+    location.reload()
+}
 document.getElementById("calc").onclick = function () {
 
     var laser_type = document.getElementById("laser_type").value;
