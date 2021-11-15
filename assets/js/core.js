@@ -1,7 +1,7 @@
 document.getElementById("reset").onclick = function () {
     location.reload()
 }
-document.getElementById("calc").onclick = function () {
+document.getElementById("calculate").onclick = function () {
 
     var laser_type = document.getElementById("laser_type").value;
     var lasers_ship = document.getElementById("lasers_ship").value;
