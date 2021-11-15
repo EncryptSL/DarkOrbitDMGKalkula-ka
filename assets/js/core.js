@@ -14,7 +14,6 @@ document.getElementById("calc").onclick = function () {
     var dmg_without_resources = calculation_dmg(laser_typ, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, dronesFormations, type_ammo,"WITHOUT_RESOURCES")
     var dmg_standard = calculation_dmg(laser_typ, lasers_ship, ship_designs, lasers_drones, lasers_drones_designs, resource, dronesFormations, type_ammo, "STANDARD")
 
-
     document.getElementById("standard_result").innerText = "Standardní výpočet bez desingu a formací: " +  dmg_standard + " DMG"
     document.getElementById("without_resources").innerText = "Výsledek bez zdrojů a formace: " +  dmg_without_resources + " DMG"
     document.getElementById("full_result").innerText = "Kompletní výsledek: " +  dmg + " DMG"

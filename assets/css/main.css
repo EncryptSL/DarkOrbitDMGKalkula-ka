@@ -1,3 +1,8 @@
+.main-background {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .full-result {
     color: #f00;
     font-weight: bold;
