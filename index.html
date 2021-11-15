@@ -1,108 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="author" content="EncryptSL (ETERNITY_ROOT#PATRIK_KOLAŘÍK)">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Darkorbit Kalkulačka</title>
-  <link rel="stylesheet" href="assets/css/main.css">
-</head>
-<body>
 
-  <section class="calc_fluid">
-    <div>
-      <label for="laser_typ"><b>Typ laseru</b></label> 
-      <select id="laser_typ">
-        <option value="LF_3">LF-3</option>
-        <option value="LF_4">LF-4</option>
-        <option value="PROMETHEUS">PROMETHEUS</option>
-      </select>
-    </div>
-  
-    <div>
-      <label for="lasers_ship"><b>Počet laserů v lodi:</b></label> 
-      <input type="number" id="lasers_ship" value="1">
-    </div>
-    
-    <div>
-      <label for="lasers_drones"><b>Počet laserů v Iris:</b></label> 
-      <input type="number" id="lasers_drones" min="1" max="20" value="1">
-    </div>
-  
-    <div>
-      <label for="ship_designs"><b>Design lodě:</b></label> 
-      <select id="ship_designs">
-        <option value="NOTHING">Nic</option>
-        <option value="ENFORCER">Enforcer</option>
-        <option value="VANQUISHER">Vanquisher</option>
-        <option value="PEACEMAKER">Peacemaker</option>
-        <option value="SOVEREIGN">Sovereign</option>
-        <option value="SURGEON">Surgeon</option>
-        <option value="REFEREE">Referee</option>
-        <option value="GOLIATH_CHAMPION">Goliath Champion</option>
-        <option value="GOLIATH_X">Goliath-X</option>
-        <option value="DIMINISHER">Diminisher</option>
-        <option value="VENOM">Venom</option>
-        <option value="CYBORG">Cyborg</option>
-      </select>
-    </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="EncryptSL (ETERNITY_ROOT#PATRIK_KOLAŘÍK)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darkorbit Kalkulačka</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/w3.css">
+  </head>
 
-    <div>
-      <label for="lasers_drones_designs"><b>Design v letounech:</b></label> 
-      <select id="lasers_drones_designs">
-        <option value="NOTHING">Nic</option>
-        <option value="HERCULES">Hercules</option>
-        <option value="HAVOC">Havoc</option>
-      </select>
-    </div>
+  <body>
 
-    <div>
-      <label for="resource"><b>Zdroje v lodi:</b></label>
-      <select id="resource">
-        <option value="NOTHING">Nic</option>
-        <option value="PROMERIUM">Promerium</option>
-        <option value="SEPROM">Seprom</option>
-      </select>
-    </div>
+    <section class="w3-container">
+      <div class="w3-row-padding">
+        <div class="w3-col m4 l3">
+          <div class="w3-card">
+            <header class="w3-container w3-blue">
+              <h1>Kalkulačka DMG</h1>
+            </header>
+            <div class="w3-container">
+              <label for="laser_typ"><b>Typ laseru</b></label>
+              <select class="w3-select w3-border" id="laser_typ">
+                <option value="LF_3">LF-3</option>
+                <option value="LF_4">LF-4</option>
+                <option value="PROMETHEUS">PROMETHEUS</option>
+              </select>
 
-    <div>
-      <label for="upgrades"><b>Upgrady všeho na 20 nebo 16</b></label> 
-      <select id="upgrades">
-        <option value="NO">Ne</option>
-        <option value="YES">Ano</option>
-      </select>
-    </div>
+              <label for="lasers_ship"><b>Počet laserů v lodi:</b></label>
+              <input class="w3-input w3-border" type="number" id="lasers_ship" value="1">
 
-    <div>
-      <label for="formations"><b>Formace</b></label> 
-      <select id="formations">
-        <option value="HEART">Srdce</option>
-        <option value="RING">Kruh</option>
-        <option value="DRILL">Vrtačka</option>
-      </select>
-    </div>
+              <label for="lasers_drones"><b>Počet laserů v Iris:</b></label>
+              <input class="w3-input w3-border" type="number" id="lasers_drones" min="1" max="20" value="1">
 
-    <div>
-      <label for="ammo"><b>Munice</b></label> 
-      <select id="ammo">
-        <option value="MB_25">Mb-25</option>
-        <option value="MCB_50">Mcb-50</option>
-        <option value="UCB_100">Ucb-100</option>
-        <option value="JOB_100">Job-100</option>
-        <option value="RB_214">Rb-100</option>
-      </select>
-    </div>
-    
-    <button id="calc">Vypočítej</button>
-  </section>
+              <label for="ship_designs"><b>Design lodě:</b></label>
+              <select class="w3-select w3-border" id="ship_designs">
+                <option value="NOTHING">Nic</option>
+                <option value="ENFORCER">Enforcer</option>
+                <option value="VANQUISHER">Vanquisher</option>
+                <option value="PEACEMAKER">Peacemaker</option>
+                <option value="SOVEREIGN">Sovereign</option>
+                <option value="SURGEON">Surgeon</option>
+                <option value="REFEREE">Referee</option>
+                <option value="GOLIATH_CHAMPION">Goliath Champion</option>
+                <option value="GOLIATH_X">Goliath-X</option>
+                <option value="DIMINISHER">Diminisher</option>
+                <option value="VENOM">Venom</option>
+                <option value="CYBORG">Cyborg</option>
+              </select>
 
-  <section id="calc_space">
-    <div><b><a id="standard_result" class="result-standard"></a></b></div>
-    <div><b><a id="without_resources" class="result-without-resources"></a></b></div>
-    <div><b><a id="full_result" class="full-result"></a></b></div>
-  </section>
+              <label for="lasers_drones_designs"><b>Design v letounech:</b></label>
+              <select class="w3-select w3-border" id="lasers_drones_designs">
+                <option value="NOTHING">Nic</option>
+                <option value="HERCULES">Hercules</option>
+                <option value="HAVOC">Havoc</option>
+              </select>
 
-  <script src="assets/js/core.js"></script>
-</body>
+              <label for="resource"><b>Zdroje v lodi:</b></label>
+              <select class="w3-select w3-border" id="resource">
+                <option value="NOTHING">Nic</option>
+                <option value="PROMERIUM">Promerium</option>
+                <option value="SEPROM">Seprom</option>
+              </select>
+
+              <label for="upgrades"><b>Upgrady všeho na 20 nebo 16</b></label>
+              <select class="w3-select w3-border" id="upgrades">
+                <option value="NO">Ne</option>
+                <option value="YES">Ano</option>
+              </select>
+
+              <label for="formations"><b>Formace</b></label>
+              <select class="w3-select w3-border" id="formations">
+                <option value="NOTHING">Nic</option>
+                <option value="HEART">Srdce</option>
+                <option value="RING">Kruh</option>
+                <option value="DRILL">Vrtačka</option>
+              </select>
+
+              <label for="ammo"><b>Munice</b></label>
+              <select class="w3-select w3-border" id="ammo">
+                <option value="NOTHING">Lcb-100</option>
+                <option value="MB_25">Mb-25</option>
+                <option value="MCB_50">Mcb-50</option>
+                <option value="UCB_100">Ucb-100</option>
+                <option value="JOB_100">Job-100</option>
+                <option value="RB_214">Rb-100</option>
+              </select>
+              <button class="w3-margin-bottom w3-margin-top" id="calc">Vypočítej</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="w3-col m4 l9">
+          <div class="w3-card">
+            <header class="w3-container w3-blue">
+              <h1>Zde očekávej výsledek</h1>
+            </header>
+            <div class="w3-container w3-margin-top">
+              <ul class="w3-ul w3-border w3-margin-bottom">
+                <li id="standard_result" class="result-standard"></li>
+                <li id="without_resources" class="result-without-resources"></li>
+                <li id="full_result" class="full-result"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="assets/js/core.js"></script>
+  </body>
+
 </html>
