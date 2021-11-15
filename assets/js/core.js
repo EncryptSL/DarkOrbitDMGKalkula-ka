@@ -186,7 +186,7 @@ function calculation_dmg(laserType, lasersShip, shipDesigns, lasers_drones, dron
     var dmg_with_resources = dmg_with_ammo + percentage(dmg_with_ammo, selectResources(resource))
     var dmg_with_ship_desing = dmg_with_resources + percentage(dmg_with_resources, selectShipDesign(shipDesigns))
     var dmg_with_drone_design = dmg_with_ship_desing + percentage(dmg_with_ship_desing, selectDroneDesign(droneDesign))
-    var dmg_with_formation = droneFormation ? dmg_with_ammo : dmg_with_ammo
+    var dmg_with_formation = droneFormation ? dmg_with_drone_design : dmg_with_drone_design
     if (droneFormation === "RING") {
         dmg_with_formation = dmg_with_drone_design - percentage(dmg_with_drone_design, selectDroneFormation(droneFormation))
     } else if(droneFormation === "HEART") {
