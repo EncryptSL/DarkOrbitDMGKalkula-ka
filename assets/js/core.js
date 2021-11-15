@@ -1,18 +1,19 @@
 document.getElementById("calc").onclick = function () {
 
-    var laser_typ = document.getElementById("laser_typ").value;
+    var laser_type = document.getElementById("laser_type").value;
     var lasers_ship = document.getElementById("lasers_ship").value;
     var ship_designs = document.getElementById("ship_designs").value;
     var lasers_drones = document.getElementById("lasers_drones").value;
     var lasers_drones_designs = document.getElementById("lasers_drones_designs").value;
     var resource = document.getElementById("resource").value;
+    var booster = document.getElementById("boosters").value;
     var upgrades = document.getElementById("upgrades").value;
     var dronesFormations = document.getElementById("formations").value;
     var type_ammo = document.getElementById("ammo").value;
 
-    var dmg = calculation_dmg(laser_typ, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, dronesFormations, type_ammo, "COMPLETE")
-    var dmg_without_resources = calculation_dmg(laser_typ, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, dronesFormations, type_ammo,"WITHOUT_RESOURCES")
-    var dmg_standard = calculation_dmg(laser_typ, lasers_ship, ship_designs, lasers_drones, lasers_drones_designs, resource, dronesFormations, type_ammo, "STANDARD")
+    var dmg = calculation_dmg(laser_type, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, "COMPLETE")
+    var dmg_without_resources = calculation_dmg(laser_type, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo,"WITHOUT_RESOURCES")
+    var dmg_standard = calculation_dmg(laser_type, lasers_ship, ship_designs, lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, "STANDARD")
 
     document.getElementById("standard_result").innerText = "Standardní výpočet bez desingu a formací: " +  dmg_standard + " DMG"
     document.getElementById("without_resources").innerText = "Výsledek bez zdrojů a formace: " +  dmg_without_resources + " DMG"
@@ -99,10 +100,27 @@ function selectResources(resource) {
 }
 
 /**
+ * @description Tato metoda vybere booster a aplikuje procenta z boosteru
+ * @param {String} type_booster 
+ * @returns number
+ */
+function selectBooster(type_booster) {
+    const boosters = [
+        {name: "NOTHING", dmg: 0},
+        {name: "DMG_B01", dmg: 10},
+        {name: "DMG_B01_DMG_B02", dmg: 20}
+    ]
+    return boosters.filter(subject => subject.name === type_booster)
+        .map((e) => {
+            return e.dmg;
+    })
+}
+
+/**
  * @description Tato metoda počítá vylepšení laserů.
  * @return number
  */
-function calculation_of_upgrades(laserTyp, upgrades) {
+function calculation_of_upgrades(laserType, upgrades) {
     if (upgrades === "NO")
         return 0
     else if (upgrades === "YES")
@@ -159,29 +177,32 @@ function selectAmmo(type_ammo) {
  * @description Tato metoda vypočítá všechny podmínky a věci které jsou potřeba.
  * @return number
  */
-function calculation_dmg(laserTyp, lasersShip, shipDesigns, lasers_drones, droneDesign, resource, droneFormation, type_ammo, type) {
+function calculation_dmg(laserType, lasersShip, shipDesigns, lasers_drones, droneDesign, resource, typeBooster, droneFormation, type_ammo, type) {
 
-    var selectedLaser = selectLaserDmg(laserTyp)
+    var selectedLaser = selectLaserDmg(laserType)
     var dmg_from_ship =  selectedLaser * lasersShip
     var dmg_from_drones = selectedLaser * lasers_drones
     var dmg_with_ammo = (dmg_from_ship + dmg_from_drones) * selectAmmo(type_ammo)
     var dmg_with_resources = dmg_with_ammo + percentage(dmg_with_ammo, selectResources(resource))
     var dmg_with_ship_desing = dmg_with_resources + percentage(dmg_with_resources, selectShipDesign(shipDesigns))
     var dmg_with_drone_design = dmg_with_ship_desing + percentage(dmg_with_ship_desing, selectDroneDesign(droneDesign))
-    var dmg_with_formation = dmg_with_drone_design + percentage(dmg_with_drone_design, selectDroneFormation(droneFormation))
-    var final_dmg = dmg_with_formation
-    if (droneFormation === "RING" | droneFormation === "HEART") {
-        final_dmg = dmg_with_formation - percentage(dmg_with_formation, selectDroneFormation(droneFormation))  
+    var dmg_with_formation = droneFormation ? dmg_with_ammo : dmg_with_ammo
+    if (droneFormation === "RING") {
+        dmg_with_formation = dmg_with_drone_design - percentage(dmg_with_drone_design, selectDroneFormation(droneFormation))
+    } else if(droneFormation === "HEART") {
+        dmg_with_formation = dmg_with_drone_design - percentage(dmg_with_drone_design, selectDroneFormation(droneFormation))
     } else if (droneFormation === "DRILL") {
-        final_dmg = dmg_with_formation + percentage(dmg_with_formation, selectDroneFormation(droneFormation))
+        dmg_with_formation = dmg_with_drone_design + percentage(dmg_with_drone_design, selectDroneFormation(droneFormation))
     }
+    var dmg_with_booster = dmg_with_formation + percentage(dmg_with_formation, selectBooster(typeBooster))
+    var final_dmg = dmg_with_booster
     
     if (type === "STANDARD") {
         final_dmg = dmg_from_ship + dmg_from_drones
     } else if (type === "WITHOUT_RESOURCES") {
         final_dmg = dmg_with_ammo
     } else {
-        final_dmg = dmg_with_formation
+        final_dmg = dmg_with_booster
     }
 
     return parseInt(final_dmg)
