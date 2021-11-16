@@ -123,11 +123,13 @@ function selectBooster(type_booster) {
  * @description Tato metoda počítá vylepšení laserů.
  * @return number
  */
-function calculation_of_upgrades(laserType, upgrades) {
-    if (upgrades === "NO")
-        return 0
-    else if (upgrades === "YES")
-        return 0
+function calculation_of_upgrades(laserType, upgrade, lasersShip, lasers_drones) {
+    if(upgrade === "YES") {
+        return ((laserType * 1.095) * lasersShip) + ((laserType * 6
+            ) * lasers_drones)
+    } else if (upgrade === "NO") {
+        return (laserType * lasersShip) + (laserType * lasers_drones)
+    }
 }
 
 /**
@@ -184,7 +186,7 @@ function calculation_dmg(laserType, lasersShip, shipDesigns, lasers_drones, dron
 
     var selectedLaser = selectLaserDmg(laserType)
     var dmg_from_ship =  selectedLaser * lasersShip
-    var dmg_from_drones = selectedLaser * lasers_drones
+    var dmg_from_drones = selectedLaser * lasers_drones + percentage(selectedLaser * lasers_drones, 10)
     var dmg_with_ammo = (dmg_from_ship + dmg_from_drones) * selectAmmo(type_ammo)
     var dmg_with_resources = dmg_with_ammo + percentage(dmg_with_ammo, selectResources(resource))
     var dmg_with_ship_desing = dmg_with_resources + percentage(dmg_with_resources, selectShipDesign(shipDesigns))
