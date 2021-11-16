@@ -18,7 +18,7 @@
         <div class="w3-col m4 l3">
           <div class="w3-card">
             <header class="w3-container w3-blue">
-              <h1>Kalkulačka DMG</h1>
+              <h1>Loď a letouny</h1>
             </header>
             <div class="w3-container w3-white">
               <label for="laser_typ"><b>Typ laseru</b></label>
@@ -57,26 +57,6 @@
                 <option value="HAVOC">Havoc</option>
               </select>
 
-              <label for="resource"><b>Zdroje v lodi:</b></label>
-              <select class="w3-select w3-border" id="resource">
-                <option value="NOTHING">Nic</option>
-                <option value="PROMERIUM">Promerium</option>
-                <option value="SEPROM">Seprom</option>
-              </select>
-
-              <label for="boosters"><b>Boostery</b></label>
-              <select class="w3-select w3-border" id="boosters">
-                <option value="NOTHING">Nic</option>
-                <option value="DMG_B01">DMG-B01</option>
-                <option value="DMG_B01_DMG_B02">DMG-B01 + DMG-B02</option>
-              </select>
-
-              <label for="upgrades"><b>Upgrady všeho na 20 nebo 16</b></label>
-              <select class="w3-select w3-border" id="upgrades">
-                <option value="NO">Ne</option>
-                <option value="YES">Ano</option>
-              </select>
-
               <label for="formations"><b>Formace</b></label>
               <select class="w3-select w3-border" id="formations">
                 <option value="NOTHING">Nic</option>
@@ -100,7 +80,36 @@
           </div>
         </div>
 
-        <div class="w3-col m4 l9">
+        <div class="w3-col m4 l3">
+        <div class="w3-card">
+          <header class="w3-container w3-blue">
+            <h1>Vylepšení a zdroje + boostery</h1>
+          </header>
+          <div class="w3-container w3-white">
+            <label for="resource"><b>Zdroje v lodi:</b></label>
+            <select class="w3-select w3-border" id="resource">
+              <option value="NOTHING">Nic</option>
+              <option value="PROMERIUM">Promerium</option>
+              <option value="SEPROM">Seprom</option>
+            </select>
+
+            <label for="boosters"><b>Boostery</b></label>
+            <select class="w3-select w3-border" id="boosters">
+              <option value="NOTHING">Nic</option>
+              <option value="DMG_B01">DMG-B01</option>
+              <option value="DMG_B01_DMG_B02">DMG-B01 + DMG-B02</option>
+            </select>
+
+            <label for="upgrades"><b>Upgrady všeho na 20 nebo 16</b></label>
+            <select class="w3-select w3-border w3-margin-bottom" id="upgrades">
+              <option value="NO">Ne</option>
+              <option value="YES">Ano</option>
+            </select>
+          </div>
+        </div>
+        </div>
+
+        <div class="w3-col m4">
           <div class="w3-card">
             <header class="w3-container w3-blue">
               <h1>Zde očekávej výsledek</h1>
