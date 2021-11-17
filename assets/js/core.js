@@ -14,9 +14,9 @@ document.getElementById("calculate").onclick = function () {
     var dronesFormations = document.getElementById("formations").value;
     var type_ammo = document.getElementById("ammo").value;
 
-    var dmg = calculation_dmg(laser_type, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, "COMPLETE")
-    var dmg_without_resources = calculation_dmg(laser_type, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo,"WITHOUT_RESOURCES")
-    var dmg_standard = calculation_dmg(laser_type, lasers_ship, ship_designs, lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, "STANDARD")
+    var dmg = calculation_dmg(laser_type, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "COMPLETE")
+    var dmg_without_resources = calculation_dmg(laser_type, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "WITHOUT_RESOURCES")
+    var dmg_standard = calculation_dmg(laser_type, lasers_ship, ship_designs, lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "STANDARD")
 
     document.getElementById("standard_result").innerText = "Standardní výpočet bez desingu a formací: " +  dmg_standard + " DMG"
     document.getElementById("without_resources").innerText = "Výsledek bez zdrojů a formace: " +  dmg_without_resources + " DMG"
@@ -120,19 +120,6 @@ function selectBooster(type_booster) {
 }
 
 /**
- * @description Tato metoda počítá vylepšení laserů.
- * @return number
- */
-function calculation_of_upgrades(laserType, upgrade, lasersShip, lasers_drones) {
-    if(upgrade === "YES") {
-        return ((laserType * 1.095) * lasersShip) + ((laserType * 6
-            ) * lasers_drones)
-    } else if (upgrade === "NO") {
-        return (laserType * lasersShip) + (laserType * lasers_drones)
-    }
-}
-
-/**
  * @description Tato metoda bere dmg z formace.
  * @return number
  */
@@ -170,6 +157,16 @@ function selectAmmo(type_ammo) {
     })
 }
 
+function applyUpgrades(upgrade, laserDmg) {
+    var dmg = laserDmg
+    if (upgrade === "YES") {
+        dmg = percentage(laserDmg, 9.5)
+    } else if (upgrade === "NO") {
+        dmg = 0
+    }
+    return dmg
+}
+
 /**
  * @description Metoda pro výpočet procent
  * @return percentage
@@ -182,11 +179,12 @@ function selectAmmo(type_ammo) {
  * @description Tato metoda vypočítá všechny podmínky a věci které jsou potřeba.
  * @return number
  */
-function calculation_dmg(laserType, lasersShip, shipDesigns, lasers_drones, droneDesign, resource, typeBooster, droneFormation, type_ammo, type) {
+function calculation_dmg(laserType, lasersShip, shipDesigns, lasers_drones, droneDesign, resource, typeBooster, droneFormation, type_ammo, upgrade, type) {
 
-    var selectedLaser = selectLaserDmg(laserType)
+    var selectedLaser =+ selectLaserDmg(laserType) + applyUpgrades(upgrade, selectLaserDmg(laserType))
+
     var dmg_from_ship =  selectedLaser * lasersShip
-    var dmg_from_drones = selectedLaser * lasers_drones + percentage(selectedLaser * lasers_drones, 10)
+    var dmg_from_drones = (selectedLaser * lasers_drones) + percentage(selectedLaser * lasers_drones, 10)
     var dmg_with_ammo = (dmg_from_ship + dmg_from_drones) * selectAmmo(type_ammo)
     var dmg_with_resources = dmg_with_ammo + percentage(dmg_with_ammo, selectResources(resource))
     var dmg_with_ship_desing = dmg_with_resources + percentage(dmg_with_resources, selectShipDesign(shipDesigns))
