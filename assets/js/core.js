@@ -5,7 +5,8 @@ document.getElementById("calculate").onclick = function () {
 
     var lasers_first_combination = document.getElementById("lasers_first_combination").value;
     var lasers_second_combination = document.getElementById("lasers_second_combination").value;
-    var lasers_ship = document.getElementById("lasers_ship").value;
+    var lasers_ship_1 = document.getElementById("lasers_ship_1").value;
+    var lasers_ship_2 = document.getElementById("lasers_ship_1").value;
     var ship_designs = document.getElementById("ship_designs").value;
     var lasers_drones = document.getElementById("lasers_drones").value;
     var lasers_drones_designs = document.getElementById("lasers_drones_designs").value;
@@ -15,9 +16,9 @@ document.getElementById("calculate").onclick = function () {
     var dronesFormations = document.getElementById("formations").value;
     var type_ammo = document.getElementById("ammo").value;
 
-    var dmg = calculation_dmg(lasers_first_combination, lasers_second_combination, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "COMPLETE")
-    var dmg_without_resources = calculation_dmg(lasers_first_combination, lasers_second_combination, lasers_ship, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "WITHOUT_RESOURCES")
-    var dmg_standard = calculation_dmg(lasers_first_combination, lasers_second_combination, lasers_ship, ship_designs, lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "STANDARD")
+    var dmg = calculation_dmg(lasers_first_combination, lasers_second_combination, lasers_ship_1, lasers_ship_2, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "COMPLETE")
+    var dmg_without_resources = calculation_dmg(lasers_first_combination, lasers_second_combination, lasers_ship_1, lasers_ship_2, ship_designs,lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "WITHOUT_RESOURCES")
+    var dmg_standard = calculation_dmg(lasers_first_combination, lasers_second_combination, lasers_ship_1, lasers_ship_2, ship_designs, lasers_drones, lasers_drones_designs, resource, booster, dronesFormations, type_ammo, upgrades, "STANDARD")
 
     document.getElementById("standard_result").innerText = "Standardní výpočet bez desingu a formací: " +  dmg_standard + " DMG"
     document.getElementById("without_resources").innerText = "Výsledek bez zdrojů a formace: " +  dmg_without_resources + " DMG"
@@ -31,6 +32,7 @@ document.getElementById("calculate").onclick = function () {
  */
 function selectLaserDmg(laserTyp) {
     const lasers = [
+        {name: "NOTHING", dmg: 0},
         {name: "LF_3", dmg: 175},
         {name: "LF_4", dmg: 200},
         {name: "PROMETHEUS", dmg: 210 + 200}
@@ -180,13 +182,12 @@ function applyUpgrades(upgrade, laserDmg) {
  * @description Tato metoda vypočítá všechny podmínky a věci které jsou potřeba.
  * @return number
  */
-function calculation_dmg(lasers_first_combination, lasers_second_combination, lasersShip, shipDesigns, lasers_drones, droneDesign, resource, typeBooster, droneFormation, type_ammo, upgrade, type) {
+function calculation_dmg(lasers_first_combination, lasers_second_combination, lasersShip, lasers_ship_2, shipDesigns, lasers_drones, droneDesign, resource, typeBooster, droneFormation, type_ammo, upgrade, type) {
 
     var selectedLasers_first =+ selectLaserDmg(lasers_first_combination) + applyUpgrades(upgrade, selectLaserDmg(lasers_first_combination))
-    var selectedLasers_second =+ selectedLasers_first + selectLaserDmg(lasers_second_combination) + applyUpgrades(upgrade, selectLaserDmg(lasers_second_combination))
-
-    var dmg_from_ship =  selectedLasers_second * lasersShip
-    var dmg_from_drones = (selectedLasers_second * lasers_drones) + percentage(selectedLasers_second * lasers_drones, 10)
+    var selectedLasers_second =+ selectLaserDmg(lasers_second_combination) + applyUpgrades(upgrade, selectLaserDmg(lasers_second_combination))
+    var dmg_from_ship =  (selectedLasers_first * lasersShip) + selectedLasers_second
+    var dmg_from_drones = (selectedLasers_first * lasers_drones) + percentage(selectedLasers_first * lasers_drones, 10)
     var dmg_with_ammo = (dmg_from_ship + dmg_from_drones) * selectAmmo(type_ammo)
     var dmg_with_resources = dmg_with_ammo + percentage(dmg_with_ammo, selectResources(resource))
     var dmg_with_ship_desing = dmg_with_resources + percentage(dmg_with_resources, selectShipDesign(shipDesigns))

@@ -21,15 +21,26 @@
               <h1>Loď a letouny</h1>
             </header>
             <div class="w3-container w3-white">
-              <label for="laser_typ"><b>Typ laseru</b></label>
-              <select class="w3-select w3-border" id="laser_type">
+              <label for="laser_typ"><b>Kombinace laserů #1</b></label>
+              <select class="w3-select w3-border" id="lasers_first_combination">
                 <option value="LF_3">LF-3</option>
                 <option value="LF_4">LF-4</option>
                 <option value="PROMETHEUS">PROMETHEUS</option>
               </select>
 
-              <label for="lasers_ship"><b>Počet laserů v lodi:</b></label>
-              <input class="w3-input w3-border" type="number" id="lasers_ship" value="1">
+              <label for="lasers_ship"><b>Počet laserů v lodi #1:</b></label>
+              <input class="w3-input w3-border" type="number" id="lasers_ship_1" value="1">
+
+              <label for="laser_typ"><b>Kombinace laserů #2</b></label>
+              <select class="w3-select w3-border" id="lasers_second_combination">
+                <option value="NOTHING">Žádná kombinace</option>
+                <option value="LF_3">LF-3</option>
+                <option value="LF_4">LF-4</option>
+                <option value="PROMETHEUS">PROMETHEUS</option>
+              </select>
+
+              <label for="lasers_ship"><b>Počet laserů v lodi #2:</b></label>
+              <input class="w3-input w3-border" type="number" id="lasers_ship_2" value="0">
 
               <label for="lasers_drones"><b>Počet laserů v Iris:</b></label>
               <input class="w3-input w3-border" type="number" id="lasers_drones" min="1" max="20" value="1">
